@@ -57,8 +57,8 @@ function _createClass(e, r, t) {
 }
 var peopleConfig = {
     src: GLOBAL_CONFIG.peoplecanvas.img,
-    rows: 15,
-    cols: 7,
+    rows: 7,
+    cols: 4,
   },
   randomRange = function (e, r) {
     return e + Math.random() * (r - e);
@@ -83,7 +83,8 @@ var peopleConfig = {
       t,
       a = e.stage,
       n = e.peep,
-      o = 0.5 < Math.random() ? 1 : -1,
+      // o = 0.5 < Math.random() ? 1 : -1,
+      o = n.rect[1]<(img.naturalHeight/2-1)?1:-1,
       i = 100 - 250 * gsap.parseEase("power2.in")(Math.random()),
       s = a.height - n.height + i;
     return (
@@ -100,11 +101,11 @@ var peopleConfig = {
   normalWalk = function (e) {
     var r = e.peep,
       t = e.props,
-      a = (t.startX, t.startY),
-      n = t.endX,
+      a = (t.startX, t.startY),//上下
+      n = t.endX,//消失
       o = gsap.timeline();
     return (
-      o.timeScale(randomRange(0.5, 1.5)),
+      o.timeScale(randomRange(0.5, 1.5)),//左右移动速度
       o.to(
         r,
         {
@@ -167,7 +168,9 @@ var peopleConfig = {
     );
   })(),
   img = document.createElement("img");
+
 (img.onload = init), (img.src = peopleConfig.src);
+
 let peoplecanvasEl = document.getElementById("peoplecanvas");
 
 let ctx = peoplecanvasEl ? peoplecanvasEl.getContext("2d") : undefined,
@@ -197,11 +200,11 @@ document.addEventListener("pjax:success", e => {
 
 function createPeeps() {
   for (
-    var e = peopleConfig.rows,
-      r = peopleConfig.cols,
+    var e = peopleConfig.rows,//4
+      r = peopleConfig.cols,//7
       t = e * r,
-      a = img.naturalWidth / e,
-      n = img.naturalHeight / r,
+      a = img.naturalWidth / e,//1200/4
+      n = img.naturalHeight / r,//1600/7
       o = 0;
     o < t;
     o++
@@ -233,7 +236,6 @@ function resize() {
 function initCrowd() {
   for (; availablePeeps.length; ) addPeepToCrowd().walk.progress(Math.random());
 }
-
 function addPeepToCrowd() {
   var e = removeRandomFromArray(availablePeeps),
     r = getRandomFromArray(walks)({
@@ -244,7 +246,7 @@ function addPeepToCrowd() {
       }),
     }).eventCallback("onComplete", function () {
       removePeepFromCrowd(e), addPeepToCrowd();
-    });
+    })
   return (
     (e.walk = r),
     crowd.push(e),
@@ -252,6 +254,7 @@ function addPeepToCrowd() {
       return e.anchorY - r.anchorY;
     }),
     e
+
   );
 }
 
@@ -269,3 +272,4 @@ function render() {
     }),
     ctx.restore();
 }
+
