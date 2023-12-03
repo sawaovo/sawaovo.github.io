@@ -39,7 +39,7 @@ class Cursor {
                 this.pt.push(el[i].outerHTML);
 
         document.body.appendChild((this.scr = document.createElement("style")));
-        this.scr.innerHTML = `* {cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8' width='8px' height='8px'><circle cx='4' cy='4' r='4' opacity='.5'/></svg>") 4 4, auto}`;
+        this.scr.innerHTML = `* {cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26' width='26px' height='26px'><circle cx='13' cy='13' r='7' opacity='.8' stroke='rgb(113, 197, 202)' stroke-width='6' fill='white'/></svg>") 4 4, auto}`;
     }
 
     refresh() {
@@ -57,7 +57,7 @@ class Cursor {
     init() {
         document.onmouseover  = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.add("hover");
         document.onmouseout   = e => this.pt.includes(e.target.outerHTML) && this.cursor.classList.remove("hover");
-        document.onmousemove  = e => {(this.pos.curr == null) && this.move(e.clientX - 8, e.clientY - 8); this.pos.curr = {x: e.clientX - 8, y: e.clientY - 8}; this.cursor.classList.remove("hidden");};
+        document.onmousemove  = e => {(this.pos.curr == null) && this.move(e.clientX - -5, e.clientY - -5); this.pos.curr = {x: e.clientX - -5, y: e.clientY - -5}; this.cursor.classList.remove("hidden");};
         document.onmouseenter = e => this.cursor.classList.remove("hidden");
         document.onmouseleave = e => this.cursor.classList.add("hidden");
         document.onmousedown  = e => this.cursor.classList.add("active");
