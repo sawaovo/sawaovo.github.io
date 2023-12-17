@@ -57,6 +57,7 @@ function _createClass(e, r, t) {
 }
 var peopleConfig = {
     src: GLOBAL_CONFIG.peoplecanvas.img,
+	// 设置横行数和列数
     rows: 7,
     cols: 4,
   },
@@ -168,9 +169,7 @@ var peopleConfig = {
     );
   })(),
   img = document.createElement("img");
-
 (img.onload = init), (img.src = peopleConfig.src);
-
 let peoplecanvasEl = document.getElementById("peoplecanvas");
 
 let ctx = peoplecanvasEl ? peoplecanvasEl.getContext("2d") : undefined,
@@ -200,11 +199,11 @@ document.addEventListener("pjax:success", e => {
 
 function createPeeps() {
   for (
-    var e = peopleConfig.rows,//4
-      r = peopleConfig.cols,//7
+    var e = peopleConfig.rows,
+      r = peopleConfig.cols,
       t = e * r,
-      a = img.naturalWidth / e,//1200/4
-      n = img.naturalHeight / r,//1600/7
+      a = img.naturalWidth / e,
+      n = img.naturalHeight / r,
       o = 0;
     o < t;
     o++
@@ -236,6 +235,7 @@ function resize() {
 function initCrowd() {
   for (; availablePeeps.length; ) addPeepToCrowd().walk.progress(Math.random());
 }
+
 function addPeepToCrowd() {
   var e = removeRandomFromArray(availablePeeps),
     r = getRandomFromArray(walks)({
@@ -246,7 +246,7 @@ function addPeepToCrowd() {
       }),
     }).eventCallback("onComplete", function () {
       removePeepFromCrowd(e), addPeepToCrowd();
-    })
+    });
   return (
     (e.walk = r),
     crowd.push(e),
@@ -254,7 +254,6 @@ function addPeepToCrowd() {
       return e.anchorY - r.anchorY;
     }),
     e
-
   );
 }
 
@@ -272,4 +271,3 @@ function render() {
     }),
     ctx.restore();
 }
-
